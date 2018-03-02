@@ -1,5 +1,6 @@
 // import preact
 import { h, render, Component } from 'preact';
+
 import {Router, Route, Link } from 'preact-router';
 
 // import stylesheets for ipad & button
@@ -98,7 +99,7 @@ export default class home extends Component {
 				<div class={ style.description }>{ this.state.advise }</div>
 				<div class = {style.home}>
 					<Link href = {'/'} class={style.buttonleft}> </Link>
-					<Link href = {'/extrainformation'} class={style.buttoncenter}> </Link>
+					<Link href = {'/extrainformation'} class ={style.buttoncenter}> </Link>
 					<Link href = {'/locations'} class={style.buttonright}>  </Link>
 				</div>
 			</div>

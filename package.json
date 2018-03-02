@@ -78,8 +78,10 @@
     "preact-router": "^2.6.0",
     "promise-polyfill": "^6.0.2",
     "proptypes": "^0.14.3",
+    "react": "^16.2.0",
     "react-google-autocomplete": "^1.0.15",
     "react-places-autocomplete": "^6.1.2",
+    "react-router": "^4.2.0",
     "serve": "^2.0.0"
   },
   "main": "webpack.config.babel.js",

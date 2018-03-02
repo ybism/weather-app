@@ -15,7 +15,7 @@ export default class locationButton extends Component{
       this.onChange = (address) => this.setState({ address })
     }
 
-    handleFormSubmit = () => {
+    handleFormSubmit = (event) => {
       event.preventDefault()
       console.log(this.state.address);
       geocodeByAddress(this.state.address)
@@ -25,7 +25,6 @@ export default class locationButton extends Component{
     }
 
     render() {
-      console.log(this.props.location.state);
       const inputProps = {
         value: this.state.address,
         onChange: this.onChange

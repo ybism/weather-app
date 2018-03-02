@@ -39,7 +39,7 @@ export default class home extends Component {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
 		var country = "UK";
 		var city = "London";
-		var url = `http://api.wunderground.com/api/14f9d8931618133f/conditions/q/${country}/${city}.json`;
+		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=c1d7495b0d0040b889af53fd7aef17e2`;
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -48,9 +48,20 @@ export default class home extends Component {
 		})
 
 		// once the data grabbed, hide the button
-		console.log(this.state.display);
-		this.setState({ display: false });
-		console.log(this.state.display);
+	}
+
+	parseResponse = (parsed_json) => {
+		var location = parsed_json['data'][0]['city_name'];
+		var temp_c = parsed_json['data'][0]['temp'];
+		temp_c = temp_c+"°C";
+		var conditions = parsed_json['data'][0]['weather']['description'];
+
+		// set states for fields so they could be rendered later on
+		this.setState({
+			locate: location,
+			temp: temp_c,
+			cond : conditions
+		});
 	}
 
 	// the main render method for the iphone component
@@ -73,19 +84,5 @@ export default class home extends Component {
 				</div>
 			</div>
 		);
-	}
-
-	parseResponse = (parsed_json) => {
-		var location = parsed_json['current_observation']['display_location']['city'];
-		var temp_c = parsed_json['current_observation']['temp_c'];
-		temp_c = temp_c+"°C";
-		var conditions = parsed_json['current_observation']['weather'];
-
-		// set states for fields so they could be rendered later on
-		this.setState({
-			locate: location,
-			temp: temp_c,
-			cond : conditions
-		});
 	}
 }

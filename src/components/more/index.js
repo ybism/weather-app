@@ -20,7 +20,6 @@ export default class more extends Component {
 		super(props);
 		// temperature state
 		this.state.temp = "";
-		this.state.checker = false;
 
 		// button display state
 
@@ -29,17 +28,26 @@ export default class more extends Component {
 
 	}
 
-	/*componentDidMount(){
-		this.setState({
-			multData : this.state.multipleData.map(function(item,index){
-				return(
-					<li key={index} >item</li>
-				);
-			}),
-			checker:true
-		})
-		console.log("Running");
-	}*/
+	componentDidMount(){
+		setInterval(
+      () => this.updateBackground(),
+      5000);
+	}
+
+	updateBackground = () => {
+		var date = new Date();
+		var currentHours;
+		currentHours = date.getSeconds();
+		if(currentHours<18&&currentHours>=9){
+			//console.log("true");
+			$("#container").css("background-image","url(../../assets/backgrounds/morningBackground.png)");
+		}
+		else{
+			//console.log("false");
+			//console.log(currentHours);
+			$("#container").css("background-image","url(../../assets/backgrounds/eveningBackground.png)");
+		}
+	}
 
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
@@ -47,7 +55,7 @@ export default class more extends Component {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
 		var country = "UK";
 		var city = "London";
-		var url = `http://api.wunderground.com/api/14f9d8931618133f/conditions/q/${country}/${city}.json`;
+		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=c1d7495b0d0040b889af53fd7aef17e2`;
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -59,10 +67,10 @@ export default class more extends Component {
 	}
 
 	parseResponse = (parsed_json) => {
-		var location = parsed_json['current_observation']['display_location']['city'];
-		var temp_c = parsed_json['current_observation']['temp_c'];
+		var location = parsed_json['data'][0]['city_name'];
+		var temp_c = parsed_json['data'][0]['temp'];
 		temp_c = temp_c+"°C";
-		var conditions = parsed_json['current_observation']['weather'];
+		var conditions = parsed_json['data'][0]['weather']['description'];
 
 		// set states for fields so they could be rendered later on
 		this.setState({
@@ -85,46 +93,65 @@ export default class more extends Component {
 	}
 
 	parseMultipleResponse = (parsed_json) => {
-		var i;
-		var data = new Array();
-		for(i=1; i<7; i++){
-			data[i] = parsed_json['data'][i]['temp'];
-			data[i] = data[i]+"°C";
-			i++;
-			data[i] = parsed_json['data'][i]['weather']['description'];
-		}
+		var temp1;
+		var temp2;
+		var temp3;
+
+		var condition1;
+		var condition2;
+		var condition3;
+
+		temp1 = parsed_json['data'][1]['temp'];
+		temp1 = temp1+"°C";
+
+		temp2 = parsed_json['data'][2]['temp'];
+		temp2 = temp2+"°C";
+
+		temp3 = parsed_json['data'][3]['temp'];
+		temp3 = temp3+"°C";
+
+		condition1 = parsed_json['data'][1]['weather']['description'];
+		condition2 = parsed_json['data'][2]['weather']['description'];
+		condition3 = parsed_json['data'][3]['weather']['description'];
 
 		this.setState({
-			multipleData:data,
-		})
+			tempDay1:temp1,
+			tempDay2:temp2,
+			tempDay3:temp3,
+			conditionDay1:condition1,
+			conditionDay2:condition2,
+			conditionDay3:condition3
+		});
 
-		for(i=1; i<7; i++){
-			console.log(this.state.multipleData[i]);
-		}
-
-		this.setState({
-			cond:this.state.multipleData[0]
-		})
-
-		console.log(this.state.cond);
-
+		console.log(this.state.tempDay1);
+		console.log(this.state.tempDay2);
+		console.log(this.state.tempDay3);
+		console.log(this.state.conditionDay1);
+		console.log(this.state.conditionDay2);
+		console.log(this.state.conditionDay3);
 	}
 
 	// the main render method for the iphone component
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-		console.log(this.state.multipleData);
 		// display all weather data
 		return (
-			<div class={ style.container }>
+			<div id = "container" class ={ style.container }>
 					<div class={ style.header }>
 					<div class={ style.city }>{ this.state.locate }</div>
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
 				</div>
 				<div class={ style.details }>
-					{this.state.checker ? <ul>{multData}</ul> : null}
+					<ul>
+						<li>{this.state.tempDay1}</li>
+						<li>{this.state.conditionDay1}</li>
+						<li>{this.state.tempDay2}</li>
+						<li>{this.state.conditionDay2}</li>
+						<li>{this.state.tempDay3}</li>
+						<li>{this.state.conditionDay3}</li>
+					</ul>
 				</div>
 				<div class = {style.home}>
 					<Link href = {'/'}> <img src = "../../assets/backgrounds/home.png" alt="home"/> </Link>

@@ -27,7 +27,7 @@ export default class home extends Component {
 
 		this.fetchWeatherData();
 
-
+		this.state.city="London";
 		//var date = new Date();
 		//console.log(date.getHours());
 		//var locationImageVar;
@@ -39,7 +39,7 @@ export default class home extends Component {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
 		var country = "UK";
 		var city = "London";
-		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=c1d7495b0d0040b889af53fd7aef17e2`;
+		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=a052308100924167ab6441e67eea099f`;
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -53,15 +53,33 @@ export default class home extends Component {
 	parseResponse = (parsed_json) => {
 		var location = parsed_json['data'][0]['city_name'];
 		var temp_c = parsed_json['data'][0]['temp'];
-		temp_c = temp_c+"°C";
+		temp_c = temp_c;
 		var conditions = parsed_json['data'][0]['weather']['description'];
 
 		// set states for fields so they could be rendered later on
 		this.setState({
 			locate: location,
-			temp: temp_c,
-			cond : conditions
+			temp: temp_c +"°",
+			cond : conditions,
+			advise: ('YOU SHOULD WEAR ' + this.towear(temp_c))
 		});
+	}
+
+
+	towear(temp_c) {
+
+
+		if(temp_c < 10 && temp_c >=-5){
+			return ('SOME GLOVES');
+
+		}
+		if(temp_c< 20 && temp_c>=10){
+			return 'A JACKET';
+		}
+		if(temp_c< 30 && temp_c>=20){
+			return ' A PAIR OF SUNGLASSES';
+		}
+
 	}
 
 	// the main render method for the iphone component
@@ -73,16 +91,19 @@ export default class home extends Component {
 			<div class={ style.container }>
 					<div class={ style.header }>
 					<div class={ style.city }>{ this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
+					<div class={ style.conditions }>{ this.state.cond }</div>
 				</div>
 				<div class={ style.details }></div>
+				<div class={ style.description }>{ this.state.advise }</div>
 				<div class = {style.home}>
-					<Link href = {'/'}> <img src = "../../assets/backgrounds/home.png" alt="home"/> </Link>
-					<Link href = {'/extrainformation'} > <img src = "../../assets/backgrounds/more.png" alt="more"/> </Link>
-					<Link href = {'/locations'}> <img src = "../../assets/backgrounds/location.png" alt="location"/> </Link>
+					<Link href = {'/'} class={style.buttonleft}> </Link>
+					<Link href = {'/extrainformation'} class={style.buttoncenter}> </Link>
+					<Link href = {'/locations'} class={style.buttonright}>  </Link>
 				</div>
 			</div>
+
+
 		);
 	}
 }

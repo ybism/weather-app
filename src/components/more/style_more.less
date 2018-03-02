@@ -18,6 +18,7 @@
 	flex: 1;
 }
 
+
 .location{
 	width:10%;
 	height:10%;
@@ -32,7 +33,47 @@
 
 .details {
 	flex: 4;
+	margin-top: 30px;
 }
+
+.more {
+	padding-bottom:20px;
+	padding-top:20px;
+	list-style: none;
+	font-size: 23px;
+
+}
+
+.column {
+		margin-top:10px;
+    float: left;
+    width: 50%;
+		margin-left: -40px;
+		padding-right: -30px;
+}
+
+.column2{
+		margin-top:10px;
+    float: right;
+    width: 50%;
+
+}
+
+.column li {
+	margin-top: 4px;
+	width: 250px;
+	background-color: rgba(0, 0, 0, 0.15);
+	padding-right: 110px;
+
+}
+
+.column2 li {
+		margin-top: 4px;
+		padding-left: 60px;
+	background-color: rgba(0, 0, 0, 0.15);
+}
+
+
 .city {
 	flex: 1;
 	font-size: 1.7em;
@@ -53,13 +94,39 @@
 
 .home{
 	width: 420px;
-	height: 100px;
+	height: 63px;
 	border: 10px solid transparent;
 }
 
-img {
-   border:1px solid #021a40;
+.buttonleft{
+	margin-right: 81px;
+	padding: 1rem 2rem 1rem 1rem;
+ background: radial-gradient(circle, black, white);
+	background-image: url("../../assets/icons/home.png");
+ background-size: cover;
+ border:none;
 }
+
+.buttoncenter{
+	padding: 1rem 2rem 1rem 1rem;
+ background: radial-gradient(circle, black, white);
+	background-image: url("../../assets/icons/more.png");
+ background-size: cover;
+ border:none;
+}
+
+.buttonright{
+	margin-left: 81px;
+	padding: 1rem 2rem 1rem 1rem;
+ background: radial-gradient(circle, black, white);
+	background-image: url("../../assets/icons/location.png");
+ background-size: cover;
+ border:none;
+}
+
+// img {
+//    border:1px solid #021a40;
+// }
 
 /*.filled:after {
 	content: "°C";

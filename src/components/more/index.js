@@ -21,10 +21,22 @@ export default class more extends Component {
 		// temperature state
 		this.state.temp = "";
 
+
+		this.state.locate = "London",
+		this.state.temp = "3°C",
+		this.state.ond = "Shit weather",
+		this.state.tempDay1 ="10°C",
+		this.state.tempDay2 = "9°C",
+		this.state.tempDay3 = "8°C",
+		this.state.conditionDay1 = "Monday",
+		this.state.conditionDay2 = "Tuesday",
+		this.state.conditionDay3 = "Wendsday"
 		// button display state
 
-		this.fetchWeatherData();
-		this.fetchMutipleDays();
+		//this.fetchWeatherData();
+		//this.fetchMutipleDays();
+
+		//this.state.daysArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 
 	}
 
@@ -36,6 +48,8 @@ export default class more extends Component {
 
 	updateBackground = () => {
 		var date = new Date();
+
+
 		var currentHours;
 		currentHours = date.getSeconds();
 		if(currentHours<18&&currentHours>=9){
@@ -55,7 +69,7 @@ export default class more extends Component {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
 		var country = "UK";
 		var city = "London";
-		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=c1d7495b0d0040b889af53fd7aef17e2`;
+		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=2afcb246582841f7a25656ab9cd666cd`;
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -83,7 +97,7 @@ export default class more extends Component {
 
 	fetchMutipleDays = () =>{
 		console.log("Multiple function running");
-		var apiurl = `https://api.weatherbit.io/v2.0/forecast/daily?&city=London&country=UK&key=c1d7495b0d0040b889af53fd7aef17e2`;
+		var apiurl = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=2afcb246582841f7a25656ab9cd666cd`;
 		$.ajax({
 			url:apiurl,
 			dataType:"jsonp",
@@ -104,15 +118,20 @@ export default class more extends Component {
 		temp1 = parsed_json['data'][1]['temp'];
 		temp1 = temp1+"°C";
 
+
 		temp2 = parsed_json['data'][2]['temp'];
 		temp2 = temp2+"°C";
+
 
 		temp3 = parsed_json['data'][3]['temp'];
 		temp3 = temp3+"°C";
 
+
 		condition1 = parsed_json['data'][1]['weather']['description'];
 		condition2 = parsed_json['data'][2]['weather']['description'];
 		condition3 = parsed_json['data'][3]['weather']['description'];
+
+
 
 		this.setState({
 			tempDay1:temp1,
@@ -131,6 +150,8 @@ export default class more extends Component {
 		console.log(this.state.conditionDay3);
 	}
 
+
+
 	// the main render method for the iphone component
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
@@ -143,20 +164,31 @@ export default class more extends Component {
 					<div class={ style.conditions }>{ this.state.cond }</div>
 					<span class={ tempStyles }>{ this.state.temp }</span>
 				</div>
+
 				<div class={ style.details }>
+					<div class={style.column}>
 					<ul>
-						<li>{this.state.tempDay1}</li>
-						<li>{this.state.conditionDay1}</li>
-						<li>{this.state.tempDay2}</li>
-						<li>{this.state.conditionDay2}</li>
-						<li>{this.state.tempDay3}</li>
-						<li>{this.state.conditionDay3}</li>
+						<li class={style.more}>{this.state.conditionDay1}</li>
+						<li class={style.more}>{this.state.conditionDay2}</li>
+						<li class={style.more}>{this.state.conditionDay3}</li>
+						<li class={style.more}>{this.state.conditionDay3}</li>
+						<li class={style.more}>{this.state.conditionDay3}</li>
 					</ul>
 				</div>
+				<div class={style.column2}>
+				<ul>
+					<li class={style.more}>{this.state.tempDay1}</li>
+					<li class={style.more}>{this.state.tempDay2}</li>
+					<li class={style.more}>{this.state.tempDay3}</li>
+					<li class={style.more}>{this.state.tempDay3}</li>
+					<li class={style.more}>{this.state.tempDay3}</li>
+				</ul>
+			</div>
+			</div>
 				<div class = {style.home}>
-					<Link href = {'/'}> <img src = "../../assets/backgrounds/home.png" alt="home"/> </Link>
-					<Link href = {'/extrainformation'}> <img src = "../../assets/backgrounds/more.png" alt="more"/> </Link>
-					<Link href = {'/locations'}> <img src = "../../assets/backgrounds/location.png" alt="location"/> </Link>
+						<Link href = {'/'} class={style.buttonleft}> </Link>
+						<Link href = {'/extrainformation'} class={style.buttoncenter}> </Link>
+						<Link href = {'/locations'} class={style.buttonright}> </Link>
 				</div>
 			</div>
 		);

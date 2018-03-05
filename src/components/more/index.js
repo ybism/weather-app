@@ -18,6 +18,8 @@ export default class more extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
+		console.log(this.props.country);
+		console.log(this.props.city);
 		// temperature state
 		this.state.temp = "";
 

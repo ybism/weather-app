@@ -10,22 +10,22 @@ import $ from 'jquery';
 
 export default class locationButton extends Component{
   constructor(props) {
-      super(props)
+      super(props);
+      console.log(this.props);
+      console.log(this.props.country);
+  		console.log(this.props.city);
       //this.state = { address: 'San Francisco, CA' }
-      this.onChange = (address) => this.setState({ address })
+      this.onChange = (address) => this.setState({ address });
     }
 
-    handleFormSubmit = () => {
-      event.preventDefault()
-      console.log(this.state.address);
-      geocodeByAddress(this.state.address)
-        .then(results => getLatLng(results[0]))
-        .then(latLng => console.log('Success', latLng))
-        .catch(error => console.error('Error', error))
+    handleClickSubmit = () => {
+      var tmp = this.state.address;
+      var arrofAddress = tmp.split(", ");
+      var lengthofArr = arrofAddress.length;
+      this.props.changeLocation(arrofAddress[lengthofArr-1],arrofAddress[lengthofArr-2]);
     }
 
     render() {
-      console.log(this.props.location.state);
       const inputProps = {
         value: this.state.address,
         onChange: this.onChange
@@ -34,9 +34,9 @@ export default class locationButton extends Component{
     			<div id="container" class ={ style.container }>
     					<div class={ style.search}>CHOOSE YOUR LOCATION</div>
               <div class={ style.header}>
-                <form onSubmit={this.handleFormSubmit}>
+                <form>
                   <PlacesAutocomplete inputProps={inputProps} />
-                  <button type="submit" class={style.button}></button>
+                  <button type="button" onClick={this.handleClickSubmit} class={style.button}></button>
                 </form>
     			    </div>
               <div class = {style.home}>

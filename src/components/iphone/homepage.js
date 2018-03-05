@@ -1,5 +1,6 @@
 // import preact
 import { h, render, Component } from 'preact';
+
 import {Router, Route, Link } from 'preact-router';
 
 // import stylesheets for ipad & button
@@ -20,6 +21,8 @@ export default class home extends Component {
 	// a constructor with initial set states
 	constructor(props){
 		super(props);
+		console.log(this.props.country)
+		console.log(this.props.city);
 		// temperature state
 		this.state.temp = "";
 		// button display state
@@ -27,7 +30,6 @@ export default class home extends Component {
 
 		this.fetchWeatherData();
 
-		this.state.city="London";
 		//var date = new Date();
 		//console.log(date.getHours());
 		//var locationImageVar;
@@ -37,9 +39,7 @@ export default class home extends Component {
 	fetchWeatherData = () => {
 		console.log("Function running");
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var country = "UK";
-		var city = "London";
-		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=London&country=UK&key=a052308100924167ab6441e67eea099f`;
+		var url = `https://api.weatherbit.io/v2.0/current/daily?&city=${this.props.city}&country=${this.props.country}&key=a052308100924167ab6441e67eea099f`;
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
@@ -98,7 +98,7 @@ export default class home extends Component {
 				<div class={ style.description }>{ this.state.advise }</div>
 				<div class = {style.home}>
 					<Link href = {'/'} class={style.buttonleft}> </Link>
-					<Link href = {'/extrainformation'} class={style.buttoncenter}> </Link>
+					<Link href = {'/extrainformation'} class ={style.buttoncenter}> </Link>
 					<Link href = {'/locations'} class={style.buttonright}>  </Link>
 				</div>
 			</div>

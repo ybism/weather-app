@@ -18,11 +18,21 @@ export default class locationButton extends Component{
       this.onChange = (address) => this.setState({ address });
     }
 
+<<<<<<< HEAD
     handleClickSubmit = () => {
       var tmp = this.state.address;
       var arrofAddress = tmp.split(", ");
       var lengthofArr = arrofAddress.length;
       this.props.changeLocation(arrofAddress[lengthofArr-1],arrofAddress[lengthofArr-2]);
+=======
+    handleFormSubmit = (event) => {
+      event.preventDefault()
+      console.log(this.state.address);
+      geocodeByAddress(this.state.address)
+        .then(results => getLatLng(results[0]))
+        .then(latLng => console.log('Success', latLng))
+        .catch(error => console.error('Error', error))
+>>>>>>> origin/master
     }
 
     render() {
